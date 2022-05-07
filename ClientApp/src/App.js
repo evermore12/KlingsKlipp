@@ -5,7 +5,6 @@ import Day from './components/Day'
 import Time from './components/Time'
 export default function App() {
     return (
-
         <div className="App">
             <Summary />
             <Treatments />
