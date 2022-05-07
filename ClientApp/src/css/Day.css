@@ -1,0 +1,31 @@
+#dropdown{
+    width: 90%;
+    max-width: 400px;
+}
+#dropdown-toggle{
+    display: flex !important;
+    width: 100%;
+}
+#dropdown-toggle::after{
+    display: none;
+}
+#dropdown-menu{
+    width: 100%;
+}
+#dropdown-item{
+    display: flex !important
+}
+.icon{
+    margin-bottom: 0;
+}
+.name{
+    margin-bottom: 0;
+}
+.select-treatment{
+    margin-right: auto;
+    margin-bottom: 0;
+}
+.price{
+    margin-left: auto;
+    margin-bottom: 0;
+}
