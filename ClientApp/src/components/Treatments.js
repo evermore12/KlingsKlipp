@@ -39,13 +39,11 @@ export default function Treatments() {
                 {!loading &&
                     treatments.map(treatment => {
                         return (
-                            <>
                                 <Dropdown.Item key={treatment.treatmentId} id='dropdown-item' href="#/action-1" onClick={() => setSelectedTreatment(treatment)}>
                                     <p className='icon'>{treatment.icon}</p>
                                     <p className='name'>{treatment.name}</p>
                                     <p className='price'>{treatment.price}</p>
                                 </Dropdown.Item>
-                            </>
                         )
                     })}
             </Dropdown.Menu>

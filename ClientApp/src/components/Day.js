@@ -18,7 +18,7 @@ export default function Day() {
                 </DropdownToggle>
             <Dropdown.Menu id='dropdown-menu'>
                             
-                                <Dropdown.Item id='dropdown-item' href="#/action-1" >
+                                <Dropdown.Item id='dropdown-item' key='ello' href="#/action-1" >
 
                                 </Dropdown.Item>
                             
