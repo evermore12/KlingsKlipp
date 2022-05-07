@@ -5,6 +5,5 @@ export default function Day() {
     <div className='slider-container'>
     <input type="range" className="slider" id="myRange" />
     </div>
-    <a href='google.com'>Google.com</a>
     </>)
 }

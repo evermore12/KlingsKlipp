@@ -13,7 +13,7 @@ export default function Treatments() {
     }, [])
 
     async function populateDropdown() {
-        let response = await fetch('weatherforecast');
+        let response = await fetch('treatments');
         let data = await response.json();
         setTreatments(data);
         isLoading(false);
@@ -42,8 +42,8 @@ export default function Treatments() {
                             <>
                                 <Dropdown.Item key={treatment.treatmentId} id='dropdown-item' href="#/action-1" onClick={() => setSelectedTreatment(treatment)}>
                                     <p className='icon'>{treatment.icon}</p>
-                                    <p className='name'>{treatment.summary}</p>
-                                    <p className='price'>{treatment.temperaturec}</p>
+                                    <p className='name'>{treatment.name}</p>
+                                    <p className='price'>{treatment.price}</p>
                                 </Dropdown.Item>
                             </>
                         )
