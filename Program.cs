@@ -1,8 +1,18 @@
+using KlingsKlipp;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<KlingsklippContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("KlingsklippDb"), providerOptions =>
+    {
+        providerOptions.EnableRetryOnFailure();
+    });
+});
 
 var app = builder.Build();
 
