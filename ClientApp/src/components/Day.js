@@ -9,9 +9,6 @@ export default function Day() {
     const [selectedTreatment, setSelectedTreatment] = useState()
     const [loading, isLoading] = useState(true)
 
-    useEffect(() => {
-        populateDropdown();
-    }, [])
 
     async function populateDays() {
 // {        let response = await fetch('treatments');
