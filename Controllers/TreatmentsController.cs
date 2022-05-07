@@ -19,7 +19,7 @@ namespace KlingsKlipp.Controllers;
             _context.SaveChanges();
             return Ok(treatment);
         }
-        [HttpGet(Name = "GetTreatments")]
+        [HttpGet]
         public IEnumerable<Treatment> Get()
         {
             return _context.Treatments.ToArray();
