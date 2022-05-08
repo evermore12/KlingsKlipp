@@ -1,12 +1,12 @@
 import '../css/Time.css'
 import noUiSlider from 'nouislider';
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import 'nouislider/dist/nouislider.css';
 
 export default function Day() {
     const slider1 = useRef()
-    const slider2 = useRef()
-    const [lockedValues, setLockedValues] = useState([60, 80]);
+    // const slider2 = useRef()
+    // const [lockedValues, setLockedValues] = useState([60, 80]);
 
 
 
