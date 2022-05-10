@@ -1,33 +1,32 @@
+import { useEffect, useState, useRef } from 'react';
+import NoUiSlider from 'nouislider'
+import 'nouislider/dist/nouislider.css';
 import '../css/Time.css'
-import { Slider } from '@mui/material';
 
-import 'rc-slider/assets/index.css';
-import { useState } from 'react';
-
-const minDistance = 10;
-export default function Day() {
-    const [value, setValue] = useState([10, 30])
-
-    const handleChange = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) {
-          return;
-        }
+var distance = 20;
+export default function Time() {
+    const slider1 = useRef();
+    useEffect(() => {
+        NoUiSlider.create(slider1.current, {
+            start:[20,40, 60, 80],
+            range:{
+                min:[0],
+                max:[100]
+            },
+            behaviour: 'drag-all',
+            connect: [false, true, false, true, false]
+        })
+        
     
-        if (newValue[1] - newValue[0] < minDistance) {
-          if (activeThumb === 0) {
-            const clamped = Math.min(newValue[0], 100 - minDistance);
-            setValue([clamped, clamped + minDistance]);
-          } else {
-            const clamped = Math.max(newValue[1], minDistance);
-            setValue([clamped - minDistance, clamped]);
-          }
-        } else {
-          setValue(newValue);
-        }
-      };
+        
+        var origins = slider1.current.getElementsByClassName('noUi-origin');
+        var connect = slider1.current.getElementsByClassName('noUi-connect'); 
+        connect[1].setAttribute('disabled', true);
+        origins[1].setAttribute('disabled', true);
+    }, [])
     return (<>
         <div className='slider-container'>
-            <Slider track={false} disableSwap value={value} onChange={handleChange}/>
+            <div ref={slider1}></div>
         </div>
     </>)
 }

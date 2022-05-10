@@ -1,4 +1,9 @@
 .slider-container {
     width: 90%;
     max-width: 400px;
-  }
+}
+[disabled].noUi-connect,
+[disabled] .noUi-connect {
+  background: #B8B8B8;
+  cursor: not-allowed
+}
