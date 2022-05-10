@@ -3,7 +3,6 @@ import NoUiSlider from 'nouislider'
 import 'nouislider/dist/nouislider.css';
 import '../css/Time.css'
 
-var distance = 20;
 export default function Time() {
     const slider1 = useRef();
     useEffect(() => {
