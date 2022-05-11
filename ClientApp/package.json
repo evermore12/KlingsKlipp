@@ -12,6 +12,7 @@
     "merge": "^2.1.1",
     "nouislider": "^15.6.0",
     "oidc-client": "^1.11.5",
+    "patch-package": "^6.4.7",
     "rc-slider": "^10.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.3.1",
@@ -49,11 +50,12 @@
   },
   "scripts": {
     "prestart": "node aspnetcore-https && node aspnetcore-react",
-    "start": "rimraf ./build && react-scripts start",
+    "start": "rimraf ./build && react-scripts start rm -fr node_modules/.cache",
     "build": "react-scripts build",
     "test": "cross-env CI=false react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src/"
+    "lint": "eslint ./src/",
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "extends": [

@@ -2,8 +2,12 @@
     width: 90%;
     max-width: 400px;
 }
-[disabled].noUi-connect,
-[disabled] .noUi-connect {
-  background: #B8B8B8;
-  cursor: not-allowed
+
+/* Attribute disabled doesn't work nice noUiSlider*/
+.disabled-touch-area{
+  pointer-events: none;
+}
+.disabled-origin{
+
+  cursor: not-allowed;
 }

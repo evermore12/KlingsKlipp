@@ -3,25 +3,26 @@ import NoUiSlider from 'nouislider'
 import 'nouislider/dist/nouislider.css';
 import '../css/Time.css'
 
+
+var previousSlider;
 export default function Time() {
     const slider1 = useRef();
     useEffect(() => {
         NoUiSlider.create(slider1.current, {
-            start:[20,40, 60, 80],
-            range:{
-                min:[0],
-                max:[100]
+            start: [20, 40, 60, 80],
+            range: {
+                min: [0],
+                max: [100]
             },
-            behaviour: 'drag-all',
             connect: [false, true, false, true, false]
         })
-        
-    
-        
-        var origins = slider1.current.getElementsByClassName('noUi-origin');
-        var connect = slider1.current.getElementsByClassName('noUi-connect'); 
-        connect[1].setAttribute('disabled', true);
-        origins[1].setAttribute('disabled', true);
+        slider1.current.noUiSlider.on('drag', (values, handle) => {
+            console.log(handle)
+        })
+                slider1.current.getElementsByClassName('noUi-connect')[1].classList.add('disabled')
+                // slider1.current.getElementsByClassName('noUi-handle')[0].classList.add('disabled-origin')
+        slider1.current.getElementsByClassName('noUi-touch-area')[0].classList.add('disabled-origin')
+
     }, [])
     return (<>
         <div className='slider-container'>
