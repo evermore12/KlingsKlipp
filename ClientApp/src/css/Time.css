@@ -4,10 +4,10 @@
 }
 
 /* Attribute disabled doesn't work nice noUiSlider*/
-.disabled-touch-area{
+.disabled{
   pointer-events: none;
+  background: #B8B8B8;
 }
-.disabled-origin{
-
-  cursor: not-allowed;
+#event-start{
+  margin-top: 60px;
 }
