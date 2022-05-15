@@ -52,8 +52,8 @@
   "scripts": {
     "prestart": "node aspnetcore-https && node aspnetcore-react",
     "start": "rimraf ./build && react-scripts start rm -fr node_modules/.cache",
-    "build": "CI=false && react-scripts build",
-    "test": "cross-env CI=false react-scripts test --env=jsdom",
+    "build": "react-scripts build",
+    "test": "cross-env-CI=false react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
     "postinstall": "patch-package"
