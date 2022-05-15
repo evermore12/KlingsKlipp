@@ -9,35 +9,79 @@ export default function Time() {
     var formatter = Intl.DateTimeFormat('sv-SE', {
         timeStyle: 'short'
     })
+    var formatterParts = Intl.DateTimeFormat('sv-SE', {
+        timeStyle: 'short'
+    }).formatToParts();
+    
     useEffect(() => {
         var startTime = new Date(2022, 4, 12, 8).getTime()
         var endTime = new Date(2022, 4, 12, 12).getTime()
+
+        var treatmentStart = new Date(2022, 4, 12, 9).getTime()
+        var treatmentEnd = new Date(2022, 4, 12, 10).getTime()
+
+        var availableTimeBefore = treatmentStart - (1000 * 60 * 10);
+        var availableTimeAfter = treatmentEnd + (1000 * 60 * 10);
+        // console.log(new Date(startTime))
+        //     console.log(new Date(availableTimeBefore))
+        //     console.log(new Date(treatmentStart))
+        //     console.log(new Date(treatmentEnd))
+        //     console.log(new Date(availableTimeAfter))
+        // console.log(new Date(endTime))
+
+        function filterPips(value, type) {
+            let date = new Date(value)
+            let minutes = date.getMinutes()
+            switch (minutes) {
+                case 0:
+                    return 1;
+                case 30:
+                    return 2;
+                default:
+                    return 0
+            }
+
+        }
         noUiSlider.create(slider.current, {
             range: {
                 min: startTime,
                 max: endTime
             },
-            start: [startTime],
-            // Steps of 10 minutes
+            start: [treatmentStart, treatmentEnd],
+            behaviour: 'drag-all',
+            connect: [true, true, true],
             step: 1000 * 60 * 10,
             format: {
-                // 'to' the formatted value. Receives a number.
                 to: function (value) {
-                    return formatter.format(new Date(value))
+                    let date = new Date(value)
+                    return formatter.format(date)
                 },
-                // 'from' the formatted value.
-                // Receives a string, should return a number.
                 from: function (value) {
-                    return 1
+                    return value
                 }
             },
-            tooltips: [true]
+            pips: {
+                mode: 'steps',
+                density: 5,
+                filter: filterPips,
+                format: {
+                    to: function (value) {
+                        let date = new Date(value)
+                        let formated = formatter.formatToParts(date);
+                        if(formated[2].value === '00')
+                            return formatter.format(date)
+                        else
+                            return formated[2].value
+                    },
+                    from: function (value) {
+                        return value
+                    }
+                }
+            }
         });
-
-slider.current.noUiSlider.on('update', (values, handle) => {
-    document.getElementById('event-start').innerHTML = values[handle]
-})
-    }, [])
+        slider.current.getElementsByClassName('noUi-connect')[0].classList.add('disabled')
+        slider.current.getElementsByClassName('noUi-connect')[2].classList.add('disabled')
+    }, [formatter])
     return (<>
         <div className='slider-container'>
             <div ref={slider}></div>

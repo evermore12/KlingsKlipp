@@ -3,6 +3,7 @@ import '../css/Day.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
 import '../css/Treatments.css'
+import Time from './Time'
 
 export default function Day() {
 
@@ -19,7 +20,10 @@ export default function Day() {
             <Dropdown.Menu id='dropdown-menu'>
                             
                                 <Dropdown.Item id='dropdown-item' key='ello' href="#/action-1" >
-
+                                <Time/>
+                                </Dropdown.Item>
+                                <Dropdown.Item id='dropdown-item' key='ello' href="#/action-1" >
+                                <Time/>
                                 </Dropdown.Item>
                             
                         
