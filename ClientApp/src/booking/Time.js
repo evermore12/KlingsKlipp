@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import noUiSlider from 'nouislider'
 import 'nouislider/dist/nouislider.css';
-import './Time.css'
+import '../css/Time.css'
 import wNumb from 'wnumb'
 
 export default function Time(treatment) {

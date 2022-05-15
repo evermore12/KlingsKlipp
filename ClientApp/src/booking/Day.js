@@ -1,11 +1,9 @@
-import './Day.css'
-
+import '../css/Day.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
 import Time from './Time'
 
 export default function Day() {
-
     return (
         <Dropdown id='dropdown'>
             <DropdownToggle id='dropdown-toggle' variant='outline-success'>
