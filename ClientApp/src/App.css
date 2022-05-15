@@ -1,0 +1,24 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  margin-top: 30px;
+}
+.Summary, .Treatments, .Day, .Time{
+  width: 90%;
+  max-width: 400px;
+  margin-top: 30px;
+}
+@font-face {
+  font-family: 'Cinzel Decorative';
+  src: local('Cinzel Decorative'), url(./fonts/CinzelDecorative-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Cinzel Decorative';
+  src: local('Cinzel Decorative'), url(./fonts/CinzelDecorative-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto Regular'), url(./fonts/Roboto-Regular.ttf) format('truetype');
+}

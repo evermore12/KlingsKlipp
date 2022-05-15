@@ -1,4 +1,4 @@
-import './css/App.css'
+import './App.css'
 import Summary from './booking/Summary'
 import Treatments from './booking/Treatments'
 import Day from './booking/Day'
@@ -11,17 +11,17 @@ export default function App() {
 
     return (
         <div className="App">
-            <div treatment={treatment} day={day} time={time} className='Summary'>
-                <Summary />
+            <div className='Summary'>
+                <Summary treatment={treatment} day={day} time={time} />
             </div>
-            <div setTreatment={setTreatment} className='Treatments'>
-                <Treatments />
+            <div className='Treatments'>
+                <Treatments setTreatment={setTreatment} />
             </div>
-            <div setDay={setDay} className='Day'>
-                <Day />
+            <div className='Day'>
+                <Day setDay={setDay} />
             </div>
-            <div setTime={setTime} className='Time'>
-                <Time />
+            <div className='Time'>
+                <Time setTime={setTime} />
             </div>
         </div>
     )
