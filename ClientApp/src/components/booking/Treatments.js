@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
-import '../css/Treatments.css'
+import './Treatments.css'
 
 export default function Treatments() {
     const [treatments, setTreatments] = useState()

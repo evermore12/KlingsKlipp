@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import noUiSlider from 'nouislider'
 import 'nouislider/dist/nouislider.css';
-import '../css/Time.css'
+import './Time.css'
 import wNumb from 'wnumb'
 
-export default function Time() {
+export default function Time(treatment) {
     const slider = useRef();
     var formatter = Intl.DateTimeFormat('sv-SE', {
         timeStyle: 'short'
@@ -83,11 +83,7 @@ export default function Time() {
         slider.current.getElementsByClassName('noUi-connect')[2].classList.add('disabled')
     }, [formatter])
     return (<>
-        <div className='slider-container'>
             <div ref={slider}></div>
-            <p id='event-start'></p>
-            <p id='event-end'></p>
-        </div>
     </>)
 }
 

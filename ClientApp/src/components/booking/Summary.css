@@ -1,7 +1,4 @@
 .Summary-box{
     outline: 1px green solid;
-    width: 90%;
-    max-width: 400px;
     height: 100px;
-    margin-bottom: 30px;
 }
