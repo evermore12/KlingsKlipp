@@ -3,13 +3,19 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
 import TimeDropdown from './TimeDropdown'
 import Select from '@mui/material/Select'
+import Nouislider from 'nouislider-react'
 import { MenuItem, InputLabel, Box, FormControl } from '@mui/material'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
+var startTime = new Date(2022, 4, 12, 8).getTime()
+var endTime = new Date(2022, 4, 12, 17).getTime()
 export default function Day() {
     const [age, setAge] = useState('')
+    const [kek, setKek] = useState()
+    const slider = useRef();
 
     const handleChange = (event) => {
+        setKek(2)
     };
     return (
         <>
@@ -24,18 +30,19 @@ export default function Day() {
           onChange={handleChange}
         >
           <MenuItem value={10}>
-          <TimeDropdown startTime={new Date(2022, 4, 12, 8).getTime()} endTime={new Date(2022, 4, 12, 17).getTime()}/>
+          <Nouislider/>
               </MenuItem>
           <MenuItem value={20}>
-          <TimeDropdown startTime={new Date(2022, 4, 12, 8).getTime()} endTime={new Date(2022, 4, 12, 17).getTime()}/>
+              <Nouislider/>
               </MenuItem>
           <MenuItem value={30}>
-          <TimeDropdown startTime={new Date(2022, 4, 12, 8).getTime()} endTime={new Date(2022, 4, 12, 17).getTime()}/>
+          <Nouislider/>
               </MenuItem>
         </Select>
       </FormControl>
     </Box>
       </>
+
 )
 }
 
