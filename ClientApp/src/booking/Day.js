@@ -1,51 +1,32 @@
 import '../css/Day.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
-import TimeDropdown from './TimeDropdown'
-import Select from '@mui/material/Select'
-import Nouislider from 'nouislider-react'
-import { MenuItem, InputLabel, Box, FormControl } from '@mui/material'
 import { useState, useEffect, useRef } from 'react'
 
-var startTime = new Date(2022, 4, 12, 8).getTime()
-var endTime = new Date(2022, 4, 12, 17).getTime()
-export default function Day() {
-    const [age, setAge] = useState('')
-    const [kek, setKek] = useState()
-    const slider = useRef();
+export default function Day({selectedDay, setSelectedDay}) {
+    const [days, setDays] = useState()
+    useEffect(() => {
+        populateDropdown();
+    }, [])
 
-    const handleChange = (event) => {
-        setKek(2)
-    };
+    function populateDropdown()
+    {
+        fetch('days')
+        .then(res => res.json())
+        .then(json => setDays(json.map(treatment => <Dropdown.Item value={treatment.name}></Dropdown.Item>)))
+    }
     return (
-        <>
-   <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>
-          <Nouislider/>
-              </MenuItem>
-          <MenuItem value={20}>
-              <Nouislider/>
-              </MenuItem>
-          <MenuItem value={30}>
-          <Nouislider/>
-              </MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
-      </>
+        <Dropdown onSelect={(key, event) => setSelectedDay(event.currentTarget.innerHTML)}>
+                <DropdownToggle variant='outline-success'>
+                {!selectedDay ? 'Dag' : selectedDay}
+                </DropdownToggle>
+            <Dropdown.Menu>
+                {days}
+            </Dropdown.Menu>
+        </Dropdown>
 
-)
+    )
 }
-
 {/* <Dropdown id='dropdown'>
 <DropdownToggle id='dropdown-toggle' variant='outline-success'>
     <p className='select-treatment'>

@@ -3,8 +3,11 @@ import noUiSlider from 'nouislider'
 import 'nouislider/dist/nouislider.css';
 import '../css/Time.css'
 import wNumb from 'wnumb'
+import Nouislider from "nouislider-react";
+import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 
-export default function Time(treatment) {
+
+export default function Time({}) {
     const slider = useRef();
     var formatter = Intl.DateTimeFormat('sv-SE', {
         timeStyle: 'short'
@@ -42,48 +45,51 @@ export default function Time(treatment) {
             }
 
         }
-        noUiSlider.create(slider.current, {
-            range: {
-                min: startTime,
-                max: endTime
-            },
-            start: [treatmentStart, treatmentEnd],
-            behaviour: 'drag-all',
-            connect: [true, true, true],
-            step: 1000 * 60 * 10,
-            format: {
-                to: function (value) {
-                    let date = new Date(value)
-                    return formatter.format(date)
-                },
-                from: function (value) {
-                    return value
-                }
-            },
-            pips: {
-                mode: 'steps',
-                density: 5,
-                filter: filterPips,
-                format: {
-                    to: function (value) {
-                        let date = new Date(value)
-                        let formated = formatter.formatToParts(date);
-                        if(formated[2].value === '00')
-                            return formatter.format(date)
-                        else
-                            return formated[2].value
-                    },
-                    from: function (value) {
-                        return value
-                    }
-                }
-            }
-        });
-        slider.current.getElementsByClassName('noUi-connect')[0].classList.add('disabled')
-        slider.current.getElementsByClassName('noUi-connect')[2].classList.add('disabled')
+        // noUiSlider.create(slider.current, {
+        //     range: {
+        //         min: startTime,
+        //         max: endTime
+        //     },
+        //     start: [treatmentStart, treatmentEnd],
+        //     behaviour: 'drag-all',
+        //     connect: [true, true, true],
+        //     step: 1000 * 60 * 10,
+        //     format: {
+        //         to: function (value) {
+        //             let date = new Date(value)
+        //             return formatter.format(date)
+        //         },
+        //         from: function (value) {
+        //             return value
+        //         }
+        //     },
+        //     pips: {
+        //         mode: 'steps',
+        //         density: 5,
+        //         filter: filterPips,
+        //         format: {
+        //             to: function (value) {
+        //                 let date = new Date(value)
+        //                 let formated = formatter.formatToParts(date);
+        //                 if(formated[2].value === '00')
+        //                     return formatter.format(date)
+        //                 else
+        //                     return formated[2].value
+        //             },
+        //             from: function (value) {
+        //                 return value
+        //             }
+        //         }
+        //     }
+        // });
+
     }, [formatter])
     return (<>
-            <div ref={slider}></div>
+    <Nouislider
+        start={[1, 10]}
+        range={{min: 0,
+                max: 50}}
+    />
     </>)
 }
 

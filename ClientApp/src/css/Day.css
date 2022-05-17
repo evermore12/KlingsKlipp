@@ -1,14 +1,14 @@
-#dropdown-toggle{
+.dropdown-toggle{
     display: flex !important;
     width: 100%;
 }
-#dropdown-toggle::after{
-    display: none;
+.dropdown-toggle::after{
+    display: none !important;
 }
-#dropdown-menu{
+.dropdown-menu{
     width: 100%;
 }
-#dropdown-item{
+.dropdown-item{
     display: flex !important
 }
 .icon{
