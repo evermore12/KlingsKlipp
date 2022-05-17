@@ -7,22 +7,22 @@ import '../css/Treatment.css'
 export default function Treatment({selectedTreatment, setSelectedTreatment}) {
     const [treatments, setTreatments] = useState()
     useEffect(() => {
-        populateDropdown()
+        populateTreatmentData()
     }, [])
 
-    function populateDropdown()
+    function populateTreatmentData()
     {
         fetch('treatments')
             .then(res => res.json())
-            .then(json => setTreatments(json.map(treatment => <Dropdown.Item value={treatment.name}>{treatment.name}</Dropdown.Item>)))
+            .then(json => setTreatments(json))
     }
     return (
-        <Dropdown onSelect={(key, event) => setSelectedTreatment(event.currentTarget.innerHTML)}>
+        <Dropdown onSelect={(key) => console.log(treatments[key])}>
                 <DropdownToggle variant='outline-success'>
                 {!selectedTreatment ? 'Behandling' : selectedTreatment}
                 </DropdownToggle>
             <Dropdown.Menu >
-                {treatments}
+            {treatments && treatments.map((treatment, index) => <Dropdown.Item key={index} eventKey={index}>{treatment.name}</Dropdown.Item>)}
             </Dropdown.Menu>
         </Dropdown>
     )

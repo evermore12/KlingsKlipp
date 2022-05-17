@@ -11,9 +11,9 @@ export default function Day({selectedDay, setSelectedDay}) {
 
     function populateDropdown()
     {
-        fetch('days')
+        fetch('schedule')
         .then(res => res.json())
-        .then(json => setDays(json.map(treatment => <Dropdown.Item value={treatment.name}></Dropdown.Item>)))
+        .then(json => setDays(json))
     }
     return (
         <Dropdown onSelect={(key, event) => setSelectedDay(event.currentTarget.innerHTML)}>
@@ -21,7 +21,7 @@ export default function Day({selectedDay, setSelectedDay}) {
                 {!selectedDay ? 'Dag' : selectedDay}
                 </DropdownToggle>
             <Dropdown.Menu>
-                {days}
+            {days && days.map((treatment, index) => <Dropdown.Item key={index} eventKey={index}>{treatment.name}</Dropdown.Item>)}
             </Dropdown.Menu>
         </Dropdown>
 

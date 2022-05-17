@@ -7,7 +7,7 @@ import Nouislider from "nouislider-react";
 import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 
 
-export default function Time({}) {
+export default function Time({treatment}) {
     const slider = useRef();
     var formatter = Intl.DateTimeFormat('sv-SE', {
         timeStyle: 'short'
@@ -15,11 +15,14 @@ export default function Time({}) {
     var formatterParts = Intl.DateTimeFormat('sv-SE', {
         timeStyle: 'short'
     }).formatToParts();
+    var day = {
+        start: new Date(2022, 4, 12, 8).getTime(),
+        end: new Date(2022, 4, 12, 12).getTime()
+    }
+
     
     useEffect(() => {
-        var startTime = new Date(2022, 4, 12, 8).getTime()
-        var endTime = new Date(2022, 4, 12, 12).getTime()
-
+        console.log(treatment)
         var treatmentStart = new Date(2022, 4, 12, 9).getTime()
         var treatmentEnd = new Date(2022, 4, 12, 10).getTime()
 
@@ -86,10 +89,12 @@ export default function Time({}) {
     }, [formatter])
     return (<>
     <Nouislider
-        start={[1, 10]}
-        range={{min: 0,
-                max: 50}}
+        start={[day.start, day.end]}
+        range={{min: day.start,
+                max: day.start + treatment.duration}}
+        
     />
+    <div ref={slider}></div>
     </>)
 }
 

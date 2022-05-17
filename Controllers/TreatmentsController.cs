@@ -7,23 +7,23 @@ namespace KlingsKlipp.Controllers;
     [Route("[controller]")]
     public class TreatmentsController : Controller
     {
-        private readonly KlingsklippContext _context;
+        private readonly Database _database;
 
-        public TreatmentsController(KlingsklippContext context)
+        public TreatmentsController(Database database)
         {
-            _context = context;
+            _database = database;
         }
         [HttpPost]
         public IActionResult Create(Treatment treatment)
         {
-            _context.Treatments.Add(treatment);
-            _context.SaveChanges();
+            _database.Treatments.Add(treatment);
+            _database.SaveChanges();
             return Ok(treatment);
         }
         [HttpGet]
         public IEnumerable<Treatment> Get()
         {
-            return _context.Treatments.ToArray();
+            return _database.Treatments.ToArray();
         }
         [HttpPut]
         public IActionResult Update()
@@ -33,8 +33,8 @@ namespace KlingsKlipp.Controllers;
         [HttpDelete]
         public IActionResult Delete(Treatment incomingTreatment)
         {
-            _context.Treatments.Remove(_context.Treatments.Where(treatment => treatment.TreatmentId == incomingTreatment.TreatmentId).SingleOrDefault());
-            _context.SaveChanges();
+            _database.Treatments.Remove(_database.Treatments.Where(treatment => treatment.Id == incomingTreatment.Id).SingleOrDefault());
+            _database.SaveChanges();
             return Ok();
         }
 

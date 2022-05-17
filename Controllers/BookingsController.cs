@@ -7,23 +7,23 @@ namespace KlingsKlipp.Controllers;
 [Route("[controller]")]
 public class BookingsController : Controller
 {
-    private readonly KlingsklippContext _context;
+    private readonly Database _database;
 
-    public BookingsController(KlingsklippContext context)
+    public BookingsController(Database database)
     {
-        _context = context;
+        _database = database;
     }
     [HttpPost]
     public IActionResult Create(Booking booking)
     {
-        _context.Bookings.Add(booking);
-        _context.SaveChanges();
+        _database.Bookings.Add(booking);
+        _database.SaveChanges();
         return Ok(booking);
     }
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(_context.Bookings);
+        return Ok(_database.Bookings);
     }
     [HttpPut]
     public IActionResult Update()
@@ -33,8 +33,8 @@ public class BookingsController : Controller
     [HttpDelete]
     public IActionResult Delete(Booking incomingBooking)
     {
-        _context.Bookings.Remove(_context.Bookings.Where(booking => booking.BookingId == incomingBooking.BookingId).SingleOrDefault());
-        _context.SaveChanges();
+        _database.Bookings.Remove(_database.Bookings.Where(booking => booking.Id == incomingBooking.Id).SingleOrDefault());
+        _database.SaveChanges();
         return Ok();
     }
 }

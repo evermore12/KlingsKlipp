@@ -7,23 +7,23 @@ namespace KlingsKlipp.Controllers;
 [Route("[controller]")]
 public class CustomersController : Controller
 {
-    private readonly KlingsklippContext _context;
+    private readonly Database _database;
 
-    public CustomersController(KlingsklippContext context)
+    public CustomersController(Database database)
     {
-        _context = context;
+        _database = database;
     }
     [HttpPost]
     public IActionResult Create(Customer customer)
     {
-        _context.Customers.Add(customer);
-        _context.SaveChanges();
+        _database.Customers.Add(customer);
+        _database.SaveChanges();
         return Ok(customer);
     }
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(_context.Customers);
+        return Ok(_database.Customers);
     }
     [HttpPut]
     public IActionResult Update()
@@ -33,8 +33,8 @@ public class CustomersController : Controller
     [HttpDelete]
     public IActionResult Delete(Customer incomingCustomer)
     {
-        _context.Customers.Remove(_context.Customers.Where(customer => customer.CustomerId == incomingCustomer.CustomerId).SingleOrDefault());
-        _context.SaveChanges();
+        _database.Customers.Remove(_database.Customers.Where(customer => customer.Id == incomingCustomer.Id).SingleOrDefault());
+        _database.SaveChanges();
         return Ok();
     }
 }

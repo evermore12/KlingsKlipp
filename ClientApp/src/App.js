@@ -34,8 +34,8 @@ export default function App() {
                 </Row>
                 <Row className="justify-content-center mt-3">
                     <Col xs='12'>
-                        {!selectedDay &&
-                            <Time selectedDay={selectedDay} setSelectedTime={setSelectedTime} />
+                        {selectedDay &&
+                            <Time treatment={selectedTreatment} selectedDay={selectedDay} setSelectedTime={setSelectedTime} />
                         }
                     </Col>
                 </Row>
