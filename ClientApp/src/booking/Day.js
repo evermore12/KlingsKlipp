@@ -12,6 +12,9 @@ export default function Day({ day, setDay }) {
         populateDropdown();
     }, [])
 
+    function getBookings(){
+        console.log(availableDays.bookings)
+    }
     function populateDropdown() {
         fetch('schedule')
             .then(res => res.json())
@@ -43,13 +46,7 @@ export default function Day({ day, setDay }) {
                                             max: day.end
                                         }
                                     }
-                                    start=
-                                    {
-                                        [
-                                            day.start,
-                                            new Date(day.start).setHours(8)
-                                        ]
-                                    }
+                                    start = getBookings()
                                     behaviour='drag-all'
                                     connect=
                                     {

@@ -28,6 +28,8 @@ public class Booking
     public long Start { get; set; }
     public long End { get; set; }
     public Treatment Treatment { get; set; }
+    public Customer Customer { get; set; }
+    public Day Day { get; set; }
 }
 public class Treatment
 {
