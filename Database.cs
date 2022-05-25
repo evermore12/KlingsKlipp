@@ -25,8 +25,8 @@ public class Customer
 public class Booking
 {
     public Guid Id { get; set; }
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public long Start { get; set; }
+    public long End { get; set; }
     public Treatment Treatment { get; set; }
 }
 public class Treatment
@@ -34,12 +34,12 @@ public class Treatment
     public Guid Id { get; set; }
     public string Name { get; set; }
     public int Price { get; set; }
-    public TimeSpan Duration { get; set; }
+    public long Duration { get; set; }
 }
 public class Day
 {
     public Guid Id { get; set; }
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public long Start { get; set; }
+    public long End { get; set; }
     public List<Booking> Bookings { get; set; }
 }

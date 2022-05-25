@@ -1,16 +1,17 @@
 import './App.css'
-import { useEffect, useState } from 'react'
-import { Dropdown, DropdownButton, Container, Row, Col } from 'react-bootstrap'
+import { useState } from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 import { Box } from '@mui/material'
 import Treatment from './booking/Treatment'
 import Day from './booking/Day'
+// import Time_Not_React from './booking/Time-non-react'
 import Time from './booking/Time'
 
 export default function App() {
-    const [selectedDay, setSelectedDay] = useState()
-    const [selectedTreatment, setSelectedTreatment] = useState()
-    const [selectedTime, setSelectedTime] = useState()
-
+    const [day, setDay] = useState()
+    const [treatment, setTreatment] = useState()
+    // const [time, setTime] = useState()
+    
     return (
         <>
             <Container>
@@ -24,18 +25,25 @@ export default function App() {
                 </Row>
                 <Row className="justify-content-center mt-3">
                     <Col xs='12'>
-                        <Treatment selectedTreatment={selectedTreatment} setSelectedTreatment={setSelectedTreatment} />
+                        <Treatment treatment={treatment} setTreatment={setTreatment} />
                     </Col>
                 </Row>
                 <Row className="justify-content-center mt-3">
                     <Col xs='12'>
-                        <Day selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+                        <Day day={day} setDay={setDay} />
                     </Col>
                 </Row>
-                <Row className="justify-content-center mt-3">
+                {/* <Row className="justify-content-center mt-3">
                     <Col xs='12'>
                         {selectedDay &&
-                            <Time treatment={selectedTreatment} selectedDay={selectedDay} setSelectedTime={setSelectedTime} />
+                            <Time_Not_React treatment={selectedTreatment} selectedDay={selectedDay} setSelectedTime={setSelectedTime} />
+                        }
+                    </Col>
+                </Row> */}
+                <Row className="justify-content-center mt-4">
+                    <Col xs='12'>
+                        {day &&
+                            <Time treatment={treatment} day={day} />
                         }
                     </Col>
                 </Row>

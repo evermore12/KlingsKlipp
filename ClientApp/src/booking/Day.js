@@ -1,44 +1,65 @@
 import '../css/Day.css'
 import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
-import { useState, useEffect, useRef } from 'react'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import { useState, useEffect} from 'react'
 
-export default function Day({selectedDay, setSelectedDay}) {
-    const [days, setDays] = useState()
+import Nouislider from 'nouislider-react'
+import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
+
+export default function Day({ day, setDay }) {
+    const [availableDays, setAvailableDays] = useState()
     useEffect(() => {
         populateDropdown();
     }, [])
 
-    function populateDropdown()
-    {
+    function populateDropdown() {
         fetch('schedule')
-        .then(res => res.json())
-        .then(json => setDays(json))
+            .then(res => res.json())
+            .then(json => {console.log(json); setAvailableDays(json)})
     }
+    var formatter = Intl.DateTimeFormat('sv-SE', {
+        day: 'numeric',
+        month: 'short'
+    })
     return (
-        <Dropdown onSelect={(key, event) => setSelectedDay(event.currentTarget.innerHTML)}>
-                <DropdownToggle variant='outline-success'>
-                {!selectedDay ? 'Dag' : selectedDay}
-                </DropdownToggle>
-            <Dropdown.Menu>
-            {days && days.map((treatment, index) => <Dropdown.Item key={index} eventKey={index}>{treatment.name}</Dropdown.Item>)}
-            </Dropdown.Menu>
-        </Dropdown>
+        <>
+            <DropdownButton variant='outline-success' onSelect={(key) => setDay(availableDays[key])} title={!day ? 'Dag' : formatter.format(day.start)}>
+                {availableDays && availableDays.map((day, index) =>
+                    <Dropdown.Item key={index} eventKey={index} className='day-dropdown-item'>
+                        <div className='dropdown-item-container'>
+                            <span style={{ whiteSpace: 'pre-line' }}>
+                            <p className='date'>{formatter.formatToParts(day.start)[0].value}</p>
+                                    <p className='date'>{formatter.formatToParts(day.start)[2].value}</p>
+                            </span>
+                            <div className='date'>
 
+                            </div>
+                            <div className='slider'>
+                                <Nouislider
+                                    range=
+                                    {
+                                        {
+                                            min: day.start,
+                                            max: day.end
+                                        }
+                                    }
+                                    start=
+                                    {
+                                        [
+                                            day.start,
+                                            new Date(day.start).setHours(8)
+                                        ]
+                                    }
+                                    behaviour='drag-all'
+                                    connect=
+                                    {
+                                        [false, true, false]
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </Dropdown.Item>)}
+            </DropdownButton>
+        </>
     )
 }
-{/* <Dropdown id='dropdown'>
-<DropdownToggle id='dropdown-toggle' variant='outline-success'>
-    <p className='select-treatment'>
-        Välj dag
-    </p>
-</DropdownToggle>
-<Dropdown.Menu id='dropdown-menu'>
-    <Dropdown.Item id='dropdown-item' key='ello' href="#/action-1" >
-        <TimeDropdown startTime={new Date(2022, 4, 12, 8).getTime()} endTime={new Date(2022, 4, 12, 17).getTime()}/>
-    </Dropdown.Item>
-    <Dropdown.Item id='dropdown-item' key='ello1' href="#/action-1" >
-        <TimeDropdown startTime={new Date(2022, 4, 12, 8).getTime()} endTime={new Date(2022, 4, 12, 17).getTime()}/>
-    </Dropdown.Item>
-</Dropdown.Menu>
-</Dropdown> */}
