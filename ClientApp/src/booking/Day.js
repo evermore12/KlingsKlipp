@@ -10,12 +10,14 @@ export default function Day({ day, setDay }) {
     const [availableDays, setAvailableDays] = useState()
     useEffect(() => {
         populateDropdown();
+
     }, [])
 
-    function getBookings(){
-        console.log(availableDays.bookings)
+    function getBookings(index){
+        return [availableDays[index].start, new Date(availableDays[index].start).setHours(new Date(availableDays[index].start).getHours() + 1)]
     }
     function populateDropdown() {
+        console.log("hi")
         fetch('schedule')
             .then(res => res.json())
             .then(json => {console.log(json); setAvailableDays(json)})
@@ -46,9 +48,9 @@ export default function Day({ day, setDay }) {
                                             max: day.end
                                         }
                                     }
-                                    start = getBookings()
-                                    behaviour='drag-all'
-                                    connect=
+                                    start = {getBookings(index)}
+                                    behaviour ='drag-all'
+                                    connect =
                                     {
                                         [false, true, false]
                                     }

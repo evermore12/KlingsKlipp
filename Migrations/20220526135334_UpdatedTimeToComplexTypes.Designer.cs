@@ -4,6 +4,7 @@ using KlingsKlipp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KlingsKlipp.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220526135334_UpdatedTimeToComplexTypes")]
+    partial class UpdatedTimeToComplexTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +36,11 @@ namespace KlingsKlipp.Migrations
                     b.Property<Guid?>("DayId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("DurationId")
-                        .HasColumnType("int");
+                    b.Property<DateTimeOffset>("End")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("Start")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<Guid?>("TreatmentId")
                         .HasColumnType("uniqueidentifier");
@@ -45,8 +50,6 @@ namespace KlingsKlipp.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("DayId");
-
-                    b.HasIndex("DurationId");
 
                     b.HasIndex("TreatmentId");
 
@@ -76,39 +79,15 @@ namespace KlingsKlipp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("DurationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DurationId");
-
-                    b.ToTable("Days");
-                });
-
-            modelBuilder.Entity("KlingsKlipp.Duration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<DateTimeOffset>("End")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<long>("EndUnix")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("Start")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<long>("StartUnix")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Duration");
+                    b.ToTable("Days");
                 });
 
             modelBuilder.Entity("KlingsKlipp.Treatment", b =>
@@ -141,10 +120,6 @@ namespace KlingsKlipp.Migrations
                         .WithMany("Bookings")
                         .HasForeignKey("DayId");
 
-                    b.HasOne("KlingsKlipp.Duration", "Duration")
-                        .WithMany()
-                        .HasForeignKey("DurationId");
-
                     b.HasOne("KlingsKlipp.Treatment", "Treatment")
                         .WithMany()
                         .HasForeignKey("TreatmentId");
@@ -153,18 +128,7 @@ namespace KlingsKlipp.Migrations
 
                     b.Navigation("Day");
 
-                    b.Navigation("Duration");
-
                     b.Navigation("Treatment");
-                });
-
-            modelBuilder.Entity("KlingsKlipp.Day", b =>
-                {
-                    b.HasOne("KlingsKlipp.Duration", "Duration")
-                        .WithMany()
-                        .HasForeignKey("DurationId");
-
-                    b.Navigation("Duration");
                 });
 
             modelBuilder.Entity("KlingsKlipp.Customer", b =>

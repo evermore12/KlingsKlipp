@@ -23,7 +23,7 @@ export default function Time({day, treatment}) {
                 {
                     [
                         day.start, 
-                        new Date(day.start).setHours(8)
+                        new Date(day.start).setHours(new Date(day.start).getHours() + 1)
                     ]
                 }
                 behaviour = 'drag-all'

@@ -1,5 +1,6 @@
 using KlingsKlipp;
 using Microsoft.EntityFrameworkCore;
+using KlingsKlipp.AutoMapperProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<Database>(options =>
         providerOptions.EnableRetryOnFailure();
     });
 });
+
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ClientApp>());
 
 var app = builder.Build();
 

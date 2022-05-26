@@ -1,30 +1,30 @@
 ﻿#nullable disable
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace KlingsKlipp.Controllers;
+
 
 [ApiController]
 [Route("[controller]")]
 public class BookingsController : Controller
 {
     private readonly Database _database;
+    private readonly IMapper _mapper;
 
-    public BookingsController(Database database)
+    public BookingsController(Database database, IMapper mapper)
     {
         _database = database;
+        _mapper = mapper;
     }
-    [HttpPost]
-    public IActionResult Create(Booking booking)
-    {
-        _database.Bookings.Add(booking);
-        _database.SaveChanges();
-        return Ok(booking);
-    }
-    [HttpGet]
-    public IActionResult Get()
-    {
-        return Ok(_database.Bookings);
-    }
+
+    // [HttpGet]
+    // public IActionResult Get()
+    // {
+    //     List<BookingDTO> bookingDTOs = _mapper.Map<List<BookingDTO>>(_database.Bookings);
+    //     return Ok(new Booking());
+    // }
+
     [HttpPut]
     public IActionResult Update()
     {
@@ -38,3 +38,19 @@ public class BookingsController : Controller
         return Ok();
     }
 }
+
+
+    // public IActionResult Create(BookingDTO bookingDTO)
+    // {
+    //     Booking booking = _mapper.Map<Booking>(bookingDTO);
+    //     _database.Add(booking);
+    //     _database.SaveChanges();
+    //     return Ok(booking.Id);
+    // }
+    // [HttpPost("[controller]/CreateWithDateTime")]
+    // public IActionResult CreateWithDateTime(Booking booking)
+    // {
+    //     _database.Add(booking);
+    //     _database.SaveChanges();
+    //     return Ok(booking.Id);
+    // }

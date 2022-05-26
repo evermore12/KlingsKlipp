@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KlingsKlipp.Controllers;
 
-public class DayWithDateTime
+public class Duration
 {
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
@@ -19,9 +19,11 @@ public class ScheduleController
     }
         
     [HttpGet]
-    public IEnumerable<Day> Get()
+    public bool Get(bool unix)
     {
-        return _database.Days;
+        var kek = new Day();
+        
+        return unix;
     }
     [HttpDelete]
     public void DeleteDay()
@@ -39,15 +41,4 @@ public class ScheduleController
         _database.SaveChanges();
         return day.Id;
     }
-    [HttpPost("/addByDateTime")]
-    public Guid AddDayDateTime(DayWithDateTime dayWithDateTime)
-    {
-        Day day = new Day
-        {
-            Start = ((DateTimeOffset)dayWithDateTime.Start).ToUnixTimeMilliseconds(),
-            End = ((DateTimeOffset)dayWithDateTime.End).ToUnixTimeMilliseconds()
-        };
-        return AddDay(day);
-    }
-
 }
