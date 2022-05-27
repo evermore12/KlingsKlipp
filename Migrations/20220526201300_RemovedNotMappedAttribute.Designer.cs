@@ -4,6 +4,7 @@ using KlingsKlipp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KlingsKlipp.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220526201300_RemovedNotMappedAttribute")]
+    partial class RemovedNotMappedAttribute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,8 +39,14 @@ namespace KlingsKlipp.Migrations
                     b.Property<DateTimeOffset>("End")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("EndUnix")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("Start")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("StartUnix")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid?>("TreatmentId")
                         .HasColumnType("uniqueidentifier");
@@ -80,8 +88,14 @@ namespace KlingsKlipp.Migrations
                     b.Property<DateTimeOffset>("End")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<long>("EndUnix")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("Start")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<long>("StartUnix")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -96,6 +110,9 @@ namespace KlingsKlipp.Migrations
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
+
+                    b.Property<long>("DurationUnix")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

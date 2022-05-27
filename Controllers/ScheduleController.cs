@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Data.Entity;
 
 namespace KlingsKlipp.Controllers;
 
-public class Duration
-{
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
-}
-
 [ApiController]
 [Route("[controller]")]
-public class ScheduleController
+public class ScheduleController : Controller
 {
     private readonly Database _database;
     public ScheduleController(Database database)
@@ -19,11 +14,9 @@ public class ScheduleController
     }
         
     [HttpGet]
-    public bool Get(bool unix)
+    public IActionResult Get()
     {
-        var kek = new Day();
-        
-        return unix;
+        return Ok(_database.Days);
     }
     [HttpDelete]
     public void DeleteDay()
@@ -35,10 +28,10 @@ public class ScheduleController
         _database.SaveChanges();
     }
     [HttpPost]
-    public Guid AddDay(Day day)
+    public IActionResult AddDay(Day day)
     {
-        _database.Days.Add(day);
+        _database.Add(day);
         _database.SaveChanges();
-        return day.Id;
+        return Ok(day.Id);
     }
 }
