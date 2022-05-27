@@ -8,39 +8,26 @@ namespace KlingsKlipp.Controllers;
 public class ScheduleController : Controller
 {
     private readonly Database _database;
-    public ScheduleController(Database database)
-    {
-        _database = database;
-    }
-        
+    public ScheduleController(Database database) => _database = database;
+
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult Schedule()
     {
         return Ok(_database.Days);
     }
-    [HttpGet("/example")]
-    public IActionResult Example()
+    [HttpGet]
+    public IActionResult Schedule(DateTime start, DateTime end)
     {
-        Day day = new Day
-        {
-            Start = DateTimeOffset.Now,
-            End = DateTimeOffset.Now
-        };
-        return Ok(day);
+        return Ok();
+    }
+    [HttpPost]
+    public IActionResult AddTimeBlock(DateTime start, DateTime end)
+    {
+        return Ok();
     }
     [HttpDelete]
-    public void DeleteDay(int id)
+    public IActionResult DeleteTimeBlock(DateTime day, int timeBlock)
     {
-        Day day = _database.Days.Single(x => x.Id == id);
-        _database.Entry(day).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-        _database.SaveChanges();
-    }
-
-    [HttpPost]
-    public IActionResult AddDay(Day day)
-    {
-        _database.Add(day);
-        _database.SaveChanges();
-        return Ok(day);
-    }
+        return Ok();
+    } 
 }

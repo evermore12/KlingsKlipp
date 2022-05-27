@@ -10,6 +10,7 @@ public class Database : DbContext
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<Treatment> Treatments { get; set; }
     public DbSet<Day> Days { get; set; }
+    public DbSet<TimeBlock> TimeBlocks { get; set; }
 
     public Database(DbContextOptions<Database> options) : base(options)
     {
@@ -21,42 +22,14 @@ public class Customer
     public int Id { get; set; }
     public string Name { get; set; }
     public string Phone { get; set; }
-    public List<Booking> Bookings { get; set; } = new List<Booking>();
+    public List<Booking> Bookings { get; set; }
 }
 public class Booking
 {
     public int Id { get; set; }
     public Treatment Treatment { get; set; }
     public Customer Customer { get; set; }
-    public Day Day { get; set; }
-
-    public DateTimeOffset Start { get; set; }
-    public DateTimeOffset End { get; set; }
-    [NotMapped]
-    public long StartUnix
-    {
-        get
-        {
-            return Start.ToUnixTimeMilliseconds(); ;
-        }
-        set
-        {
-            Start = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
-        }
-    }
-    [NotMapped]
-    public long EndUnix
-    {
-        get
-        {
-            return End.ToUnixTimeMilliseconds(); ;
-        }
-        set
-        {
-            End = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
-        }
-    }
-
+    public TimeBlock TimeBlock { get; set; }
 }
 public class Treatment
 {
@@ -79,12 +52,14 @@ public class Treatment
 
     }
 }
-public class Day
+public class TimeBlock
 {
     public int Id { get; set; }
-    public List<Booking> Bookings { get; set; }
     public DateTimeOffset Start { get; set; }
     public DateTimeOffset End { get; set; }
+    public int BookingId { get; set; }
+    public Booking Booking { get; set; }
+    public bool IsBooked => Booking != null;
     [NotMapped]
     public long StartUnix
     {
@@ -109,6 +84,13 @@ public class Day
             End = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
         }
     }
+}
+
+public class Day
+{
+    public int Id { get; set; }
+    public DateTime Date { get; set; }
+    public List<TimeBlock> TimeBlocks { get; set; }
 
 }
 
