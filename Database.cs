@@ -18,14 +18,14 @@ public class Database : DbContext
 }
 public class Customer
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Phone { get; set; }
     public List<Booking> Bookings { get; set; } = new List<Booking>();
 }
 public class Booking
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public Treatment Treatment { get; set; }
     public Customer Customer { get; set; }
     public Day Day { get; set; }
@@ -41,7 +41,7 @@ public class Booking
         }
         set
         {
-            Start = DateTimeOffset.FromUnixTimeMilliseconds(value);
+            Start = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
         }
     }
     [NotMapped]
@@ -53,16 +53,14 @@ public class Booking
         }
         set
         {
-            End = DateTimeOffset.FromUnixTimeMilliseconds(value);
+            End = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
         }
     }
 
 }
 public class Treatment
 {
-    private TimeSpan _duration;
-    private long _durationUnix;
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public int Price { get; set; }
     public TimeSpan Duration {get; set;}
@@ -83,7 +81,7 @@ public class Treatment
 }
 public class Day
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public List<Booking> Bookings { get; set; }
     public DateTimeOffset Start { get; set; }
     public DateTimeOffset End { get; set; }
@@ -96,7 +94,7 @@ public class Day
         }
         set
         {
-            Start = DateTimeOffset.FromUnixTimeMilliseconds(value);
+            Start = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
         }
     }
     [NotMapped]
@@ -104,45 +102,15 @@ public class Day
     {
         get
         {
-            return End.ToUnixTimeMilliseconds(); ;
+            return End.ToUnixTimeMilliseconds();
         }
         set
         {
-            End = DateTimeOffset.FromUnixTimeMilliseconds(value);
+            End = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
         }
     }
 
 }
 
-//DTO's
-public class CustomerDTO
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Phone { get; set; }
-    public List<Booking> Bookings { get; set; } = new List<Booking>();
-}
-public class BookingDTO
-{
-    public Guid Id { get; set; }
-    public long Start { get; set; }
-    public long End { get; set; }
-    public Treatment Treatment { get; set; }
-    public Customer Customer { get; set; }
-    public Day Day { get; set; }
-}
-public class TreatmentDTO
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public int Price { get; set; }
-    public long Duration { get; set; }
-}
-public class DayDTO
-{
-    public Guid Id { get; set; }
-    public long Start { get; set; }
-    public long End { get; set; }
-    public List<Booking> Bookings { get; set; }
-}
+
 

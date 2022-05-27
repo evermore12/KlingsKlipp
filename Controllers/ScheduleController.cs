@@ -18,20 +18,29 @@ public class ScheduleController : Controller
     {
         return Ok(_database.Days);
     }
-    [HttpDelete]
-    public void DeleteDay()
+    [HttpGet("/example")]
+    public IActionResult Example()
     {
-        foreach (Day Day in _database.Days)
+        Day day = new Day
         {
-            _database.Entry(Day).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-        }
+            Start = DateTimeOffset.Now,
+            End = DateTimeOffset.Now
+        };
+        return Ok(day);
+    }
+    [HttpDelete]
+    public void DeleteDay(int id)
+    {
+        Day day = _database.Days.Single(x => x.Id == id);
+        _database.Entry(day).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
         _database.SaveChanges();
     }
+
     [HttpPost]
     public IActionResult AddDay(Day day)
     {
         _database.Add(day);
         _database.SaveChanges();
-        return Ok(day.Id);
+        return Ok(day);
     }
 }
