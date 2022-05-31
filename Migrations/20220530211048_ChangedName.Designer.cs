@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KlingsKlipp.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20220527141428_IdToIntStepTwo")]
-    partial class IdToIntStepTwo
+    [Migration("20220530211048_ChangedName")]
+    partial class ChangedName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace KlingsKlipp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("KlingsKlipp.Booking", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Booking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,15 +35,6 @@ namespace KlingsKlipp.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DayId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("End")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset>("Start")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<int?>("TreatmentId")
                         .HasColumnType("int");
 
@@ -51,14 +42,12 @@ namespace KlingsKlipp.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("DayId");
-
                     b.HasIndex("TreatmentId");
 
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Customer", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,7 +66,7 @@ namespace KlingsKlipp.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Day", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.TimeBlock", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,18 +74,28 @@ namespace KlingsKlipp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("End")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<int?>("BookingId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("Start")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("Day")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("End")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("Start")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Days");
+                    b.HasIndex("BookingId")
+                        .IsUnique()
+                        .HasFilter("[BookingId] IS NOT NULL");
+
+                    b.ToTable("TimeBlocks");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Treatment", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Treatment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,33 +117,36 @@ namespace KlingsKlipp.Migrations
                     b.ToTable("Treatments");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Booking", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Booking", b =>
                 {
-                    b.HasOne("KlingsKlipp.Customer", "Customer")
+                    b.HasOne("KlingsKlipp.Data.Customer", "Customer")
                         .WithMany("Bookings")
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("KlingsKlipp.Day", "Day")
-                        .WithMany("Bookings")
-                        .HasForeignKey("DayId");
-
-                    b.HasOne("KlingsKlipp.Treatment", "Treatment")
+                    b.HasOne("KlingsKlipp.Data.Treatment", "Treatment")
                         .WithMany()
                         .HasForeignKey("TreatmentId");
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Day");
-
                     b.Navigation("Treatment");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Customer", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.TimeBlock", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.HasOne("KlingsKlipp.Data.Booking", "Booking")
+                        .WithOne("TimeBlock")
+                        .HasForeignKey("KlingsKlipp.Data.TimeBlock", "BookingId");
+
+                    b.Navigation("Booking");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Day", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Booking", b =>
+                {
+                    b.Navigation("TimeBlock");
+                });
+
+            modelBuilder.Entity("KlingsKlipp.Data.Customer", b =>
                 {
                     b.Navigation("Bookings");
                 });

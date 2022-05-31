@@ -1,33 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Data.Entity;
-
 namespace KlingsKlipp.Controllers;
+using KlingsKlipp.Data;
+using KlingsKlipp.Data.Services;
 
 [ApiController]
 [Route("[controller]")]
 public class ScheduleController : Controller
 {
-    private readonly Database _database;
-    public ScheduleController(Database database) => _database = database;
+    private readonly Database db;
+
+    public Schedule Schedule { get; set; }
+    public ScheduleController(Schedule schedule, Database db)
+    {
+        this.Schedule = schedule;
+        this.db = db;
+    }
 
     [HttpGet]
-    public IActionResult Schedule()
+    public IActionResult Get()
     {
-        return Ok(_database.Days);
-    }
-    [HttpGet]
-    public IActionResult Schedule(DateTime start, DateTime end)
-    {
-        return Ok();
+        return Ok(Schedule.Days);
     }
     [HttpPost]
-    public IActionResult AddTimeBlock(DateTime start, DateTime end)
+    public IActionResult Add(TimeBlock timeBlock)
     {
+        Schedule.Add(timeBlock);
         return Ok();
     }
     [HttpDelete]
-    public IActionResult DeleteTimeBlock(DateTime day, int timeBlock)
+    public IActionResult Delete(DateTime day, int timeBlock)
     {
         return Ok();
-    } 
+    }
 }

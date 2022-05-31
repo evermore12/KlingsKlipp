@@ -1,5 +1,6 @@
-using KlingsKlipp;
+using KlingsKlipp.Data;
 using Microsoft.EntityFrameworkCore;
+using KlingsKlipp.Data.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<Database>(options =>
         providerOptions.EnableRetryOnFailure();
     });
 });
+
+builder.Services.AddScoped<Schedule>();
 
 var app = builder.Build();
 

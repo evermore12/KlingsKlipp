@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace KlingsKlipp;
+namespace KlingsKlipp.Data;
 
 public class Database : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<Treatment> Treatments { get; set; }
-    public DbSet<Day> Days { get; set; }
     public DbSet<TimeBlock> TimeBlocks { get; set; }
 
     public Database(DbContextOptions<Database> options) : base(options)
@@ -54,22 +53,32 @@ public class Treatment
 }
 public class TimeBlock
 {
+    public TimeBlock()
+    {
+        
+    }
+    public TimeBlock(TimeSpan start, TimeSpan end)
+    {
+        Start = start;
+        End = end;
+    }
     public int Id { get; set; }
-    public DateTimeOffset Start { get; set; }
-    public DateTimeOffset End { get; set; }
-    public int BookingId { get; set; }
-    public Booking Booking { get; set; }
+    public TimeSpan Start { get; set; }
+    public TimeSpan End { get; set; }
+    public DateTime Day { get; set; }
+    public int? BookingId { get; set; }
+    public Booking? Booking { get; set; }
     public bool IsBooked => Booking != null;
     [NotMapped]
     public long StartUnix
     {
         get
         {
-            return Start.ToUnixTimeMilliseconds(); ;
+            return (long)Start.TotalMilliseconds;
         }
         set
         {
-            Start = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
+            Start = TimeSpan.FromMilliseconds(value);
         }
     }
     [NotMapped]
@@ -77,21 +86,13 @@ public class TimeBlock
     {
         get
         {
-            return End.ToUnixTimeMilliseconds();
+            return (long)Start.TotalMilliseconds;
         }
         set
         {
-            End = TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeMilliseconds(value), TimeZoneInfo.Local);
+            Start = TimeSpan.FromMilliseconds(value);
         }
     }
-}
-
-public class Day
-{
-    public int Id { get; set; }
-    public DateTime Date { get; set; }
-    public List<TimeBlock> TimeBlocks { get; set; }
-
 }
 
 
