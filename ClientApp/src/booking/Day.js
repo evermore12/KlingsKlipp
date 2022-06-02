@@ -10,7 +10,6 @@ export default function Day({ day, setDay }) {
     const [availableDays, setAvailableDays] = useState()
     useEffect(() => {
         populateDropdown();
-
     }, [])
 
     function getBookings(index){
@@ -18,7 +17,7 @@ export default function Day({ day, setDay }) {
     }
     function populateDropdown() {
         console.log("hi")
-        fetch('schedule')
+        fetch('schedule/from' + '?' + new Date())
             .then(res => res.json())
             .then(json => {console.log(json); setAvailableDays(json)})
     }
