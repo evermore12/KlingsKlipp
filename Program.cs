@@ -3,6 +3,9 @@ using KlingsKlipp.Data.Services;
 using KlingsKlipp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +22,18 @@ builder.Services.AddDbContext<Database>(options =>
 
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 
-builder.Services.AddScoped<ICRUDService<Break>, CRUDService<Break>>();
+builder.Services.AddScoped<ICRUDService<Timeblock>, CRUDService<Timeblock>>();
 builder.Services.AddScoped<ICRUDService<Customer>, CRUDService<Customer>>();
 builder.Services.AddScoped<ICRUDService<Treatment>, CRUDService<Treatment>>();
-builder.Services.AddScoped<ICRUDService<Day>, CRUDService<Day>>();
 builder.Services.AddScoped<ICRUDService<Booking>, CRUDService<Booking>>();
-
 builder.Services.AddSwaggerGen();
-var app = builder.Build();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+});
 
+var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
@@ -53,3 +59,31 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html");;
 
 app.Run();
+
+
+public class DateOnlyJsonConverter : JsonConverter<DateOnly>
+{
+    public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        string json = reader.GetString();
+        return DateOnly.Parse(json);
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString(provider: CultureInfo.InvariantCulture));
+    }
+}
+public class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
+{
+    public override TimeOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        string json = reader.GetString();
+        return TimeOnly.Parse(json);
+    }
+
+    public override void Write(Utf8JsonWriter writer, TimeOnly value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString(provider: CultureInfo.InvariantCulture));
+    }
+}

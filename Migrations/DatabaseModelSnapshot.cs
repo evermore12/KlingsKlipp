@@ -33,7 +33,7 @@ namespace KlingsKlipp.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ScheduleId")
+                    b.Property<int>("TimeblockId")
                         .HasColumnType("int");
 
                     b.Property<int>("TreatmentId")
@@ -43,35 +43,11 @@ namespace KlingsKlipp.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ScheduleId");
+                    b.HasIndex("TimeblockId");
 
                     b.HasIndex("TreatmentId");
 
-                    b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("KlingsKlipp.Data.Models.Break", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<TimeSpan>("End")
-                        .HasColumnType("time");
-
-                    b.Property<int?>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Start")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("Breaks");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("KlingsKlipp.Data.Models.Customer", b =>
@@ -92,10 +68,20 @@ namespace KlingsKlipp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("KlingsKlipp.Data.Models.Day", b =>
+                {
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
+                    b.HasKey("Date");
+
+                    b.ToTable("Days", (string)null);
+                });
+
+            modelBuilder.Entity("KlingsKlipp.Data.Models.Timeblock", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,10 +89,10 @@ namespace KlingsKlipp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("DayId")
+                        .HasColumnType("date");
 
-                    b.Property<TimeSpan>("Finish")
+                    b.Property<TimeSpan>("End")
                         .HasColumnType("time");
 
                     b.Property<TimeSpan>("Start")
@@ -114,25 +100,9 @@ namespace KlingsKlipp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Days");
-                });
-
-            modelBuilder.Entity("KlingsKlipp.Data.Models.Schedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DayId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("DayId");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Timeblocks", (string)null);
                 });
 
             modelBuilder.Entity("KlingsKlipp.Data.Models.Treatment", b =>
@@ -155,7 +125,7 @@ namespace KlingsKlipp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Treatments");
+                    b.ToTable("Treatments", (string)null);
                 });
 
             modelBuilder.Entity("KlingsKlipp.Data.Models.Booking", b =>
@@ -166,9 +136,11 @@ namespace KlingsKlipp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KlingsKlipp.Data.Models.Schedule", null)
+                    b.HasOne("KlingsKlipp.Data.Models.Timeblock", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("ScheduleId");
+                        .HasForeignKey("TimeblockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("KlingsKlipp.Data.Models.Treatment", "Treatment")
                         .WithMany()
@@ -181,17 +153,10 @@ namespace KlingsKlipp.Migrations
                     b.Navigation("Treatment");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Data.Models.Break", b =>
-                {
-                    b.HasOne("KlingsKlipp.Data.Models.Schedule", null)
-                        .WithMany("Breaks")
-                        .HasForeignKey("ScheduleId");
-                });
-
-            modelBuilder.Entity("KlingsKlipp.Data.Models.Schedule", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Models.Timeblock", b =>
                 {
                     b.HasOne("KlingsKlipp.Data.Models.Day", "Day")
-                        .WithMany()
+                        .WithMany("Timeblocks")
                         .HasForeignKey("DayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -204,11 +169,14 @@ namespace KlingsKlipp.Migrations
                     b.Navigation("Bookings");
                 });
 
-            modelBuilder.Entity("KlingsKlipp.Data.Models.Schedule", b =>
+            modelBuilder.Entity("KlingsKlipp.Data.Models.Day", b =>
+                {
+                    b.Navigation("Timeblocks");
+                });
+
+            modelBuilder.Entity("KlingsKlipp.Data.Models.Timeblock", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Breaks");
                 });
 #pragma warning restore 612, 618
         }

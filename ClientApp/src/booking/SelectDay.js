@@ -6,20 +6,20 @@ import { useState, useEffect} from 'react'
 import Nouislider from 'nouislider-react'
 import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 
-export default function Day({ day, setDay }) {
-    const [availableDays, setAvailableDays] = useState()
+export default function SelectDay({ day, setDay }) {
+    const [schedule, setSchedule] = useState()
+
     useEffect(() => {
         populateDropdown();
     }, [])
 
     function getBookings(index){
-        return [availableDays[index].start, new Date(availableDays[index].start).setHours(new Date(availableDays[index].start).getHours() + 1)]
+        return [schedule[index].start, new Date(schedule[index].start).setHours(new Date(schedule[index].start).getHours() + 1)]
     }
     function populateDropdown() {
-        console.log("hi")
-        fetch('schedule/from' + '?' + new Date())
+        fetch("schedule/from" + Date())
             .then(res => res.json())
-            .then(json => {console.log(json); setAvailableDays(json)})
+            .then(json => setSchedule(json))
     }
     var formatter = Intl.DateTimeFormat('sv-SE', {
         day: 'numeric',
@@ -27,8 +27,8 @@ export default function Day({ day, setDay }) {
     })
     return (
         <>
-            <DropdownButton variant='outline-success' onSelect={(key) => setDay(availableDays[key])} title={!day ? 'Dag' : formatter.format(day.start)}>
-                {availableDays && availableDays.map((day, index) =>
+            <DropdownButton variant='outline-success' onSelect={(key) => setDay(schedule[key])} title={!day ? 'Dag' : formatter.format(day.start)}>
+                {schedule && schedule.map((day, index) =>
                     <Dropdown.Item key={index} eventKey={index} className='day-dropdown-item'>
                         <div className='dropdown-item-container'>
                             <span style={{ whiteSpace: 'pre-line' }}>
@@ -36,7 +36,6 @@ export default function Day({ day, setDay }) {
                                     <p className='date'>{formatter.formatToParts(day.start)[2].value}</p>
                             </span>
                             <div className='date'>
-
                             </div>
                             <div className='slider'>
                                 <Nouislider

@@ -24,18 +24,16 @@ namespace KlingsKlipp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Days",
+                name: "Schedules",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Day = table.Column<DateTime>(type: "date", nullable: false),
                     Start = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Finish = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    End = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Days", x => x.Id);
+                    table.PrimaryKey("PK_Schedules", x => x.Day);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,22 +52,24 @@ namespace KlingsKlipp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "Breaks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DayId = table.Column<int>(type: "int", nullable: false)
+                    Start = table.Column<TimeSpan>(type: "time", nullable: false),
+                    End = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Day = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ScheduleDay = table.Column<DateTime>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.PrimaryKey("PK_Breaks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedules_Days_DayId",
-                        column: x => x.DayId,
-                        principalTable: "Days",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Breaks_Schedules_ScheduleDay",
+                        column: x => x.ScheduleDay,
+                        principalTable: "Schedules",
+                        principalColumn: "Day");
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +80,8 @@ namespace KlingsKlipp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TreatmentId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    ScheduleId = table.Column<int>(type: "int", nullable: true)
+                    Day = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ScheduleDay = table.Column<DateTime>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,10 +93,10 @@ namespace KlingsKlipp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bookings_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
+                        name: "FK_Bookings_Schedules_ScheduleDay",
+                        column: x => x.ScheduleDay,
                         principalTable: "Schedules",
-                        principalColumn: "Id");
+                        principalColumn: "Day");
                     table.ForeignKey(
                         name: "FK_Bookings_Treatments_TreatmentId",
                         column: x => x.TreatmentId,
@@ -104,35 +105,15 @@ namespace KlingsKlipp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Breaks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Start = table.Column<TimeSpan>(type: "time", nullable: false),
-                    End = table.Column<TimeSpan>(type: "time", nullable: false),
-                    ScheduleId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Breaks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Breaks_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedules",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_CustomerId",
                 table: "Bookings",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_ScheduleId",
+                name: "IX_Bookings_ScheduleDay",
                 table: "Bookings",
-                column: "ScheduleId");
+                column: "ScheduleDay");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_TreatmentId",
@@ -140,14 +121,9 @@ namespace KlingsKlipp.Migrations
                 column: "TreatmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Breaks_ScheduleId",
+                name: "IX_Breaks_ScheduleDay",
                 table: "Breaks",
-                column: "ScheduleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_DayId",
-                table: "Schedules",
-                column: "DayId");
+                column: "ScheduleDay");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -166,9 +142,6 @@ namespace KlingsKlipp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Schedules");
-
-            migrationBuilder.DropTable(
-                name: "Days");
         }
     }
 }

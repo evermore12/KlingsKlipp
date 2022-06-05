@@ -4,8 +4,9 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
 import '../css/Treatment.css'
 
 
-export default function Treatment({treatment, setTreatment}) {
-    const [availableTreatments, setAvailableTreatments] = useState()
+export default function SelectTreatment({treatment, setTreatment}) {
+    const [treatments, setTreatments] = useState()
+    
     useEffect(() => {
         populateDropdown()
     }, [])
@@ -13,15 +14,15 @@ export default function Treatment({treatment, setTreatment}) {
     {
         fetch('treatments')
             .then(res => res.json())
-            .then(json => setAvailableTreatments(json))
+            .then(json => setTreatments(json))
     }
     return (
-        <Dropdown onSelect={(key) => setTreatment(availableTreatments[key])}>
+        <Dropdown onSelect={(key) => setTreatment(treatments[key])}>
                 <DropdownToggle variant='outline-success'>
                 {!treatment ? 'Behandling' : treatment.name}
                 </DropdownToggle>
             <Dropdown.Menu >
-            {availableTreatments && availableTreatments.map((treatment, index) => <Dropdown.Item key={index} eventKey={index}>{treatment.name}</Dropdown.Item>)}
+            {treatments && treatments.map((treatment, index) => <Dropdown.Item key={index} eventKey={index}>{treatment.name}</Dropdown.Item>)}
             </Dropdown.Menu>
         </Dropdown>
     )

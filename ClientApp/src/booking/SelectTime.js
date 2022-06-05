@@ -5,7 +5,7 @@ import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 
 
 
-export default function Time({day, treatment}) {
+export default function SelectTime({day, treatment}) {
     day.end = new Date(day.end).setHours(18)
     var formatter = Intl.DateTimeFormat('sv-SE', {
         timeStyle: 'short'
