@@ -42,6 +42,11 @@ namespace KlingsKlipp.Controllers
 
             return scheduleService.Add(block);
         }
+        [HttpGet("between")]
+        public IEnumerable<Day> Between(DateOnly start, DateOnly end)
+        {
+            return scheduleService.Between(start, end);
+        }
         //[HttpGet("from")]
         //public IEnumerable<Day> From(DateOnly day)
         //{
@@ -100,7 +105,23 @@ namespace KlingsKlipp.Data.Services
         //IEnumerable<Day> IScheduleService.Full => database.Days;
 
         //public Day Get(DateOnly day) => database.Days.Single(d => d.Date == day);
-        //public IEnumerable<Day> Between(DateOnly day, DateOnly secondDay) => database.Days.Where(s => s.Date >= day && s.Date <= secondDay);
+        [HttpGet("between")]
+        public IEnumerable<Day> Between([FromQuery]DateOnly start, [FromBody] DateOnly end)
+        {
+            List<Day> schedule = new List<Day>();
+            for (DateOnly i = start; i <= end; i.AddDays(1))
+            {
+                Day day = database.Days.Find(i);
+
+                if(day == null)
+                    day = new() { Date=i};
+
+                schedule.Add(day);
+            }
+
+            return schedule;
+        }
+
         //public IEnumerable<Day> From(DateOnly day) => database.Days.Where(s => s.Date >= day);
         //public IEnumerable<Day> To(DateOnly day) => database.Days.Where(s => s.Date <= day);
         //public void Remove(DateOnly day)
@@ -116,7 +137,7 @@ namespace KlingsKlipp.Data.Services
     {
         //public IEnumerable<Day> Full { get; }
         //public Day Get(DateOnly day);
-        //public IEnumerable<Day> Between(DateOnly firstDay, DateOnly secondDay);
+        public IEnumerable<Day> Between(DateOnly start, DateOnly end);
         //public IEnumerable<Day> From(DateOnly day);
         //public IEnumerable<Day> To(DateOnly day);
         //public void Remove(DateOnly day);
