@@ -46,5 +46,7 @@
     margin-left: 0.3rem;
 }
 .day-dropdown-item{
-    padding: 0.5rem !important
+}
+.container{
+    padding: 0 !important;
 }

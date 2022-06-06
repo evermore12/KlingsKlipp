@@ -18,7 +18,7 @@ namespace KlingsKlipp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ScheduleController 
+    public class ScheduleController : Controller
     {
         IScheduleService scheduleService;
         public ScheduleController(IScheduleService scheduleService)
@@ -43,9 +43,9 @@ namespace KlingsKlipp.Controllers
             return scheduleService.Add(block);
         }
         [HttpGet("between")]
-        public IEnumerable<Day> Between(DateOnly start, DateOnly end)
+        public IActionResult Between(DateTime start, DateTime end)
         {
-            return scheduleService.Between(start, end);
+            return Ok(scheduleService.Between(DateOnly.FromDateTime(start), DateOnly.FromDateTime(end)));
         }
         //[HttpGet("from")]
         //public IEnumerable<Day> From(DateOnly day)
@@ -109,7 +109,7 @@ namespace KlingsKlipp.Data.Services
         public IEnumerable<Day> Between([FromQuery]DateOnly start, [FromBody] DateOnly end)
         {
             List<Day> schedule = new List<Day>();
-            for (DateOnly i = start; i <= end; i.AddDays(1))
+            for (DateOnly i = start; i <= end; i = i.AddDays(1))
             {
                 Day day = database.Days.Find(i);
 

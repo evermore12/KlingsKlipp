@@ -13,18 +13,11 @@ export default function Schedule() {
 
     const [schedule, setSchedule] = useState()
 
-    useEffect(() => {
-        populateDropdown();
-    }, [])
 
     function getBookings(index) {
         return [schedule[index].start, new Date(schedule[index].start).setHours(new Date(schedule[index].start).getHours() + 1)]
     }
-    function populateDropdown() {
-        fetch("schedule/from" + Date())
-            .then(res => res.json())
-            .then(json => setSchedule(json))
-    }
+
     var formatter = Intl.DateTimeFormat('sv-SE', {
         day: 'numeric',
         month: 'short'
