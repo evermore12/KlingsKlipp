@@ -1,4 +1,4 @@
-import '../css/Summary.css'
+import '../css/Summary.module.css'
 
 export default function Summary(){
     return(<>

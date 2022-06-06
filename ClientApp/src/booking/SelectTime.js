@@ -1,4 +1,4 @@
-import '../css/Time.css'
+import '../css/Time.module.css'
 
 import Nouislider from 'nouislider-react'
 import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle'
-import '../css/Treatment.css'
+import styles from '../css/treatment.module.css'
 
-
-export default function SelectTreatment({treatment, setTreatment}) {
+export default function Treatment({treatment, setTreatment}) {
     const [treatments, setTreatments] = useState()
     
     useEffect(() => {
@@ -17,7 +16,8 @@ export default function SelectTreatment({treatment, setTreatment}) {
             .then(json => setTreatments(json))
     }
     return (
-        <Dropdown onSelect={(key) => setTreatment(treatments[key])}>
+        <>
+        <Dropdown className='' onSelect={(key) => setTreatment(treatments[key])}>
                 <DropdownToggle variant='outline-success'>
                 {!treatment ? 'Behandling' : treatment.name}
                 </DropdownToggle>
@@ -25,5 +25,7 @@ export default function SelectTreatment({treatment, setTreatment}) {
             {treatments && treatments.map((treatment, index) => <Dropdown.Item key={index} eventKey={index}>{treatment.name}</Dropdown.Item>)}
             </Dropdown.Menu>
         </Dropdown>
+        <div className={styles.border}></div>
+        </>
     )
 }

@@ -1,7 +1,10 @@
-import '../css/Day.css'
+import '../css/Day.module.css'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import { useState, useEffect} from 'react'
+
+
+
 
 import Nouislider from 'nouislider-react'
 import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
@@ -9,25 +12,22 @@ import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
 export default function SelectDay({ day, setDay }) {
     const [schedule, setSchedule] = useState()
 
+    async function fetchSchedule(from, to) {
+        fetch("schedule/between?start=" + from + "&" + "end=" + to)
+            .then(res => res.json())
+    }
+
     useEffect(() => {
-        populateDropdown();
+        fetchSchedule().then(json => setSchedule(json));
     }, [])
 
-    function getBookings(index){
-        return [schedule[index].start, new Date(schedule[index].start).setHours(new Date(schedule[index].start).getHours() + 1)]
-    }
-    function populateDropdown() {
-        fetch("schedule/from" + Date())
-            .then(res => res.json())
-            .then(json => setSchedule(json))
-    }
     var formatter = Intl.DateTimeFormat('sv-SE', {
         day: 'numeric',
         month: 'short'
     })
     return (
         <>
-            <DropdownButton variant='outline-success' onSelect={(key) => setDay(schedule[key])} title={!day ? 'Dag' : formatter.format(day.start)}>
+            <DropdownButton variant="outline-success" onSelect={(key) => setDay(schedule[key])} title={!day ? 'Dag' : formatter.format(day.start)}>
                 {schedule && schedule.map((day, index) =>
                     <Dropdown.Item key={index} eventKey={index} className='day-dropdown-item'>
                         <div className='dropdown-item-container'>
@@ -46,7 +46,7 @@ export default function SelectDay({ day, setDay }) {
                                             max: day.end
                                         }
                                     }
-                                    start = {getBookings(index)}
+                                    start = {[10]}
                                     behaviour ='drag-all'
                                     connect =
                                     {
