@@ -1,0 +1,11 @@
+  [disabled] .noUi-connect {
+    background: #3FB8AF;
+    cursor: pointer;
+  }
+  [disabled].noUi-target,
+  [disabled].noUi-handle {
+    cursor: pointer;
+  }
+  .noUi-target {
+    padding: 0 16px;
+}

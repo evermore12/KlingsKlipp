@@ -30,6 +30,8 @@ public class Database : DbContext
     {
         builder.Entity<Day>().Navigation(e => e.Timeblocks).AutoInclude();
         builder.Entity<Timeblock>().Navigation(e => e.Bookings).AutoInclude();
+        builder.Entity<Booking>().Navigation(e => e.Treatment).AutoInclude();
+        builder.Entity<Booking>().Navigation(e => e.Customer).AutoInclude();
     }
     
 }

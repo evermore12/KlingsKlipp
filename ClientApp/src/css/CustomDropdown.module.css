@@ -1,0 +1,15 @@
+.flexbox{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.noUiSlider-container{
+    flex: 1;
+}
+.date{
+    display: flex;
+    align-items: center;
+}
+.date > p {
+    margin: 0;
+}

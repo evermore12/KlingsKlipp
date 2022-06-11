@@ -21,16 +21,20 @@ builder.Services.AddDbContext<Database>(options =>
 });
 
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 builder.Services.AddScoped<ICRUDService<Timeblock>, CRUDService<Timeblock>>();
 builder.Services.AddScoped<ICRUDService<Customer>, CRUDService<Customer>>();
 builder.Services.AddScoped<ICRUDService<Treatment>, CRUDService<Treatment>>();
 builder.Services.AddScoped<ICRUDService<Booking>, CRUDService<Booking>>();
+builder.Services.AddScoped<ICRUDService<Day>, CRUDService<Day>>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
     options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
 });
 
 var app = builder.Build();

@@ -9,20 +9,18 @@ namespace KlingsKlipp.Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public TimeSpan Duration { get; set; }
+        public TimeOnly Duration { get; set; }
         [NotMapped]
         public long DurationUnix
         {
             get
             {
-                return (long)Duration.TotalMilliseconds;
+                return (long)Duration.ToTimeSpan().TotalMilliseconds;
             }
-
             set
             {
-                Duration = TimeSpan.FromMilliseconds(value);
+                Duration = TimeOnly.FromTimeSpan(TimeSpan.FromMilliseconds(value));
             }
-
         }
     }
 }

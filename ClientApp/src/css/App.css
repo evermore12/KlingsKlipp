@@ -1,14 +1,14 @@
 @font-face {
   font-family: 'Cinzel Decorative';
-  src: local('Cinzel Decorative'), url(./fonts/CinzelDecorative-Regular.ttf) format('truetype');
+  src: local('Cinzel Decorative'), url(../fonts/CinzelDecorative-Regular.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Cinzel Decorative';
-  src: local('Cinzel Decorative'), url(./fonts/CinzelDecorative-Regular.ttf) format('truetype');
+  src: local('Cinzel Decorative'), url(../fonts/CinzelDecorative-Regular.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Roboto';
-  src: local('Roboto Regular'), url(./fonts/Roboto-Regular.ttf) format('truetype');
+  src: local('Roboto Regular'), url(../fonts/Roboto-Regular.ttf) format('truetype');
 }
 .container{
   max-width: 400px !important;
@@ -21,23 +21,16 @@
 .dropdown-toggle::after{
   display: none !important;
 }
-.dropdown-menu{
-  width: 100%;
+.app-container{
+  margin-top: 5rem;
 }
-.dropdown-item{
-  display: flex !important
-}
-.border{
-    height: 300px;
-    width: 300px;
-    background-color: blue;
-}
+
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   background-color: transparent;
-  width: 300px;
-  height: 200px;
+  width: 500px !important;
+  height: 400px;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
@@ -62,7 +55,6 @@
 
 /* Style the back side */
 .flip-card-back {
-
   transform: rotateY(180deg);
 }
 .arrow {

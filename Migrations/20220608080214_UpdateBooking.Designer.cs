@@ -4,6 +4,7 @@ using KlingsKlipp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KlingsKlipp.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220608080214_UpdateBooking")]
+    partial class UpdateBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace KlingsKlipp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KlingsKlipp.Data.Models.Timeblock", "Timeblock")
+                    b.HasOne("KlingsKlipp.Data.Models.Timeblock", null)
                         .WithMany("Bookings")
                         .HasForeignKey("TimeblockId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -149,8 +151,6 @@ namespace KlingsKlipp.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Timeblock");
 
                     b.Navigation("Treatment");
                 });
