@@ -1,5 +1,5 @@
 import noUiSlider from 'nouislider';
-import mergeTooltips from "../shared/MergeTooltips";
+import mergeTooltips from "./MergeTooltips";
 import 'nouislider/dist/nouislider.css';
 import { useEffect, useRef, useState } from "react";
 import { Row, Col, Button } from 'react-bootstrap';

@@ -1,6 +1,6 @@
 import Dropdown from 'react-bootstrap/Dropdown'
 import { useState, useEffect, useRef } from 'react'
-import { CustomMenu, CustomItem } from '../shared/CustomDropdown'
+import { CustomMenu, CustomItem } from '../components/CustomDropdown'
 
 export default function SelectDay({ setSelectedDay, selectedDay, setSliderValues, selectedTime, days }) {
     const [show, setShow] = useState(false);

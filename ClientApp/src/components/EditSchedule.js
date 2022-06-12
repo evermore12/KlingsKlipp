@@ -1,10 +1,10 @@
 import { Button, Form, DropdownButton, Dropdown, Row, Col } from "react-bootstrap";
 import Nouislider from 'nouislider-react'
 import 'nouislider-react/node_modules/nouislider/distribute/nouislider.css'
-import SelectDay from "../shared/SelectDay";
+import SelectDay from "./SelectDay";
 import { useState, useEffect, useRef } from "react";
-import { ScheduleSlider } from "../EditSchedule/ScheduleSlider";
-import ActionsMenu from "../EditSchedule/ActionsMenu";
+import { ScheduleSlider } from "./ScheduleSlider";
+import ActionsMenu from "./ActionsMenu";
 import styles from '../css/EditSchedule.module.css'
 export default function EditSchedule() {
     const [selectedDay, setSelectedDay] = useState()

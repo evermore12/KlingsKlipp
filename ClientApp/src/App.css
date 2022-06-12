@@ -1,14 +1,14 @@
 @font-face {
   font-family: 'Cinzel Decorative';
-  src: local('Cinzel Decorative'), url(../fonts/CinzelDecorative-Regular.ttf) format('truetype');
+  src: local('Cinzel Decorative'), url(./fonts/CinzelDecorative-Regular.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Cinzel Decorative';
-  src: local('Cinzel Decorative'), url(../fonts/CinzelDecorative-Regular.ttf) format('truetype');
+  src: local('Cinzel Decorative'), url(./fonts/CinzelDecorative-Regular.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Roboto';
-  src: local('Roboto Regular'), url(../fonts/Roboto-Regular.ttf) format('truetype');
+  src: local('Roboto Regular'), url(./fonts/Roboto-Regular.ttf) format('truetype');
 }
 .container{
   max-width: 400px !important;
